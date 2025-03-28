@@ -6,10 +6,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import ConatctDetails from "./components/ConatctDetails";
 import api from "./api/contacts";
+import EditContact from "./components/EditContact";
 
 function App() {
   const LOCAL_STORAGE_CONATCT = "contacts";
   const [contacts, setContacts] = useState([]);
+
   const addContact = async (contact) => {
     const request = {
       id: uuid(),
@@ -17,6 +19,15 @@ function App() {
     };
     const response = await api.post("/contacts", request);
     setContacts([...contacts, response.data]);
+  };
+
+  const updateContact = async (contact) => {
+    const response = await api.put(`/contacts/${contact.id}`, contact);
+    setContacts(
+      contacts.map((contact) =>
+        contact.id === response.data.id ? response.data : contact
+      )
+    );
   };
 
   const removeHandler = async (id) => {
@@ -51,15 +62,21 @@ function App() {
             <Route
               index
               Component={() => (
-                <ContactList
-                  contactList={contacts}
-                  getDeleteContact={removeHandler}
-                />
+                <>
+                  <ContactList
+                    contactList={contacts}
+                    getDeleteContact={removeHandler}
+                  />
+                </>
               )}
             />
             <Route
               path="add"
               Component={() => <AddContact addContact={addContact} />}
+            />
+            <Route
+              path="edit"
+              Component={() => <EditContact updateContact={updateContact} />}
             />
             <Route path="contact/:id" element={<ConatctDetails />} />
 

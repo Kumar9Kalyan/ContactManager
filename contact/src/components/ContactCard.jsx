@@ -14,6 +14,11 @@ const ContactCard = (props) => {
         <div>{contact.email}</div>
       </Link>
 
+      <Link to={`/edit`} state={{ contact }}>
+        <button className="bg-black rounded-2xl w-15 ml-4 cursor-pointer">
+          Edit
+        </button>
+      </Link>
       <button
         onClick={() => deleteContact(contact.id)}
         className="bg-red-600 rounded-2xl w-15 ml-4 cursor-pointer"

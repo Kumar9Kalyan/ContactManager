@@ -23,6 +23,7 @@ const ContactList = (props) => {
   return (
     <div className="text-center">
       <h1 className="text-3xl font-bold mt-6  ">Contact List</h1>
+
       <div className="text-large font-bold mt-6  ">{contactList}</div>
       <Link to="/add">
         <button className="mt-5 bg-blue-600 rounded-xl w-18 ml-4 cursor-pointer ">
